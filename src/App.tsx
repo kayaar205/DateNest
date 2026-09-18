@@ -7,8 +7,288 @@ type FormValues = Pick<ImportantDate, 'title' | 'category' | 'date' | 'notes' | 
 const blankForm = (): FormValues => ({ title: '', category: 'Other', date: todayISO(), notes: '', reminderDaysList: undefined, recurrence: 'none' })
 const categoryIcon: Record<string, string> = { Work:'💼', Documents:'📄', Travel:'✈️', Vehicle:'🚗', Finance:'💳', Rent:'🏠', Subscription:'📦', Warranty:'🛡️', Personal:'🎉', Events:'★', Other:'📌' }
 
+const getCurrentRoute = (): 'landing' | 'app' => typeof window !== 'undefined' && window.location.pathname === '/app' ? 'app' : 'landing'
+
+function LandingPage({ openApp }: { openApp: () => void }) {
+  const sampleDates: ImportantDate[] = [
+    { id: 'sample-1', title: 'Vehicle Insurance', category: 'Vehicle', date: todayISO(), notes: 'Renewal reminder', recurrence: 'yearly', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), reminderDaysList: [30, 7, 0], important: true },
+    { id: 'sample-2', title: 'Passport Renewal', category: 'Documents', date: todayISO(), notes: 'Check expiry', recurrence: 'none', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), reminderDaysList: [30, 14], important: true },
+    { id: 'sample-3', title: 'Rent Payment', category: 'Finance', date: todayISO(), notes: 'Monthly due date', recurrence: 'monthly', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), reminderDaysList: [7, 1], important: true }
+  ]
+
+  return (
+    <div className="landing-page">
+      <header className="landing-header">
+        <div className="container landing-nav">
+          <a href="/" className="landing-brand" aria-label="DateNest home">
+            <span className="brand-mark" aria-hidden="true">▦</span>
+            <span>
+              <strong>DateNest</strong>
+              <small>Keep every important date close.</small>
+            </span>
+          </a>
+          <nav className="landing-links" aria-label="Main navigation">
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How it works</a>
+            <button type="button" className="text-button" onClick={openApp}>Sign in</button>
+            <button type="button" className="primary landing-cta" onClick={openApp}>Get started →</button>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section className="hero landing-hero">
+          <div className="container hero-inner">
+            <div className="hero-copy">
+              <p className="eyebrow">DateNest</p>
+              <h1>Keep every important date close.</h1>
+              <p className="hero-text">Track important dates, stay ahead of deadlines, and get reminded before they matter.</p>
+              <div className="hero-actions">
+                <button type="button" className="primary" onClick={openApp}>Get started →</button>
+              </div>
+              <p className="hero-meta">Add your first important date in seconds.</p>
+            </div>
+
+            <div className="hero-visual" aria-label="DateNest dashboard preview">
+              <div className="preview-shell">
+                <div className="preview-topbar">
+                  <div className="preview-brand">DateNest</div>
+                  <div className="preview-actions">
+                    <span className="dot" />
+                    <span className="dot" />
+                    <span className="dot" />
+                  </div>
+                </div>
+                <div className="preview-body">
+                  <div className="preview-metrics">
+                    <div className="mini-stat"><strong>2</strong><span>Due today</span></div>
+                    <div className="mini-stat"><strong>7</strong><span>This week</span></div>
+                    <div className="mini-stat"><strong>11</strong><span>Upcoming</span></div>
+                  </div>
+                  <div className="preview-list">
+                    {sampleDates.map(item => (
+                      <DateCard key={item.id} item={item} click={() => {}} edit={() => {}} remove={() => {}} complete={() => {}} reopen={() => {}} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section" id="features">
+          <div className="container">
+            <div className="section-intro">
+              <p className="eyebrow">Why DateNest</p>
+              <h2>Life comes with too many dates.</h2>
+              <p>You remember the big ones. But what about the dates you can’t afford to forget?</p>
+            </div>
+            <div className="category-grid">
+              <article className="info-card">
+                <span className="info-icon">🔄</span>
+                <h3>Renewals</h3>
+                <ul><li>Insurance</li><li>PUC</li><li>Driving License</li></ul>
+              </article>
+              <article className="info-card">
+                <span className="info-icon">💰</span>
+                <h3>Money</h3>
+                <ul><li>EMI</li><li>Rent</li><li>Subscriptions</li></ul>
+              </article>
+              <article className="info-card">
+                <span className="info-icon">💼</span>
+                <h3>Work</h3>
+                <ul><li>Deadlines</li><li>Appointments</li><li>Important tasks</li></ul>
+              </article>
+              <article className="info-card">
+                <span className="info-icon">🎉</span>
+                <h3>Life</h3>
+                <ul><li>Birthdays</li><li>Anniversaries</li><li>Events</li></ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section muted" id="how-it-works">
+          <div className="container">
+            <div className="section-intro center">
+              <p className="eyebrow">How it works</p>
+              <h2>Add. Remember. Stay ahead.</h2>
+            </div>
+            <div className="steps-grid">
+              <article className="step-card">
+                <span className="step-number">01</span>
+                <h3>Add a date</h3>
+                <p>Add anything important in seconds.</p>
+              </article>
+              <article className="step-card">
+                <span className="step-number">02</span>
+                <h3>Set your reminder</h3>
+                <p>Choose when you want DateNest to remind you.</p>
+              </article>
+              <article className="step-card">
+                <span className="step-number">03</span>
+                <h3>Stay ahead</h3>
+                <p>See what’s coming before it becomes urgent.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section">
+          <div className="container">
+            <div className="section-intro">
+              <p className="eyebrow">At a glance</p>
+              <h2>Your important dates. At a glance.</h2>
+            </div>
+            <div className="showcase-grid">
+              <div className="showcase-preview">
+                {sampleDates.map(item => (
+                  <DateCard key={`showcase-${item.id}`} item={item} click={() => {}} edit={() => {}} remove={() => {}} complete={() => {}} reopen={() => {}} />
+                ))}
+              </div>
+              <div className="feature-badges">
+                <div className="feature-badge"><strong>Due today</strong><span>See what needs attention now</span></div>
+                <div className="feature-badge"><strong>Coming up this week</strong><span>Know what is approaching next</span></div>
+                <div className="feature-badge"><strong>Never miss a renewal</strong><span>Keep your important dates in view</span></div>
+                <div className="feature-badge"><strong>Completed dates</strong><span>Keep your history without clutter</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section muted">
+          <div className="container">
+            <div className="section-intro">
+              <p className="eyebrow">Track whatever matters</p>
+              <h2>Track whatever matters.</h2>
+              <p>From renewals and payments to personal milestones and deadlines, keep the dates that matter in one place.</p>
+            </div>
+            <div className="pill-grid">
+              <div className="pill-group"><h3>Vehicle</h3><span>Insurance</span><span>PUC</span><span>Registration</span><span>Service</span></div>
+              <div className="pill-group"><h3>Money</h3><span>EMI</span><span>Rent</span><span>Subscriptions</span><span>Payments</span></div>
+              <div className="pill-group"><h3>Documents</h3><span>Passport</span><span>Visa</span><span>Driving License</span><span>Certificates</span></div>
+              <div className="pill-group"><h3>Life</h3><span>Birthdays</span><span>Anniversaries</span><span>Events</span><span>Special dates</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section">
+          <div className="container">
+            <div className="section-intro">
+              <p className="eyebrow">Reminders</p>
+              <h2>Never be surprised.</h2>
+              <p>Know what’s coming before the date arrives.</p>
+            </div>
+            <div className="timeline">
+              <div className="timeline-item"><span>30 days before</span><strong>Passport renewal coming up</strong></div>
+              <div className="timeline-item"><span>7 days before</span><strong>Insurance renewal in 7 days</strong></div>
+              <div className="timeline-item"><span>Today</span><strong>Subscription renewal today</strong></div>
+              <div className="timeline-item completed-item"><span>Completed</span><strong>✓ Done</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section muted">
+          <div className="container cal-wrap">
+            <div className="section-intro">
+              <p className="eyebrow">Calendar</p>
+              <h2>See your life by date.</h2>
+              <p>See everything important coming up in one simple calendar.</p>
+            </div>
+            <div className="calendar-hero">
+              <div className="mini-calendar">
+                <div className="mini-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+                <div className="mini-grid">
+                  <button type="button" className="mini-day muted">28</button>
+                  <button type="button" className="mini-day muted">29</button>
+                  <button type="button" className="mini-day muted">30</button>
+                  <button type="button" className="mini-day">1</button>
+                  <button type="button" className="mini-day highlight">2</button>
+                  <button type="button" className="mini-day">3</button>
+                  <button type="button" className="mini-day">4</button>
+                  <button type="button" className="mini-day">5</button>
+                  <button type="button" className="mini-day">6</button>
+                  <button type="button" className="mini-day">7</button>
+                  <button type="button" className="mini-day">8</button>
+                  <button type="button" className="mini-day">9</button>
+                  <button type="button" className="mini-day">10</button>
+                  <button type="button" className="mini-day">11</button>
+                </div>
+              </div>
+              <div className="calendar-copy">
+                <p>Look at upcoming dates in context and stay on top of what matters.</p>
+                <button type="button" className="primary" onClick={openApp}>Explore your dates →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section">
+          <div className="container">
+            <div className="section-intro">
+              <p className="eyebrow">History</p>
+              <h2>Done doesn’t mean forgotten.</h2>
+              <p>Keep a record of what you’ve taken care of without cluttering your upcoming dates.</p>
+            </div>
+            <div className="history-list">
+              <div className="history-item"><span className="check-pill">✓</span><div><strong>Vehicle Insurance</strong><small>Vehicle · Renewal</small><time>Completed October 8, 2026</time></div></div>
+              <div className="history-item"><span className="check-pill">✓</span><div><strong>Passport Renewal</strong><small>Documents · Renewal</small><time>Completed September 17, 2026</time></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section emotional">
+          <div className="container emotional-inner">
+            <p className="eyebrow">DateNest</p>
+            <h2>Less remembering. More living.</h2>
+            <p>DateNest keeps the dates that matter within reach, so you don’t have to keep them in your head.</p>
+          </div>
+        </section>
+
+        <section className="landing-section final-cta">
+          <div className="container final-cta-inner">
+            <h2>Don’t keep important dates in your head.</h2>
+            <h3>Keep them in DateNest.</h3>
+            <button type="button" className="primary" onClick={openApp}>Get started →</button>
+            <p>Add your first important date in seconds.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer className="landing-footer">
+        <div className="container footer-inner">
+          <div>
+            <strong>DateNest</strong>
+            <p>Keep every important date close.</p>
+          </div>
+          <nav className="footer-links">
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#calendar">Calendar</a>
+            <button type="button" className="text-button" onClick={openApp}>Get started</button>
+          </nav>
+        </div>
+        <div className="container footer-meta">
+          <span>© 2026 DateNest. All rights reserved.</span>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
 export default function App() {
+  const [route, setRoute] = useState<'landing' | 'app'>(() => getCurrentRoute())
   const [dates, setDates] = useState<ImportantDate[]>(loadData), [preferences, setPreferences] = useState<ReminderPreferences>(loadReminderPreferences), [view, setView] = useState<View>('dashboard'), [formItem, setFormItem] = useState<ImportantDate | null | undefined>(undefined), [selected, setSelected] = useState<ImportantDate | null>(null)
+  useEffect(() => {
+    const handleRoute = () => setRoute(getCurrentRoute())
+    window.addEventListener('popstate', handleRoute)
+    return () => window.removeEventListener('popstate', handleRoute)
+  }, [])
+  const navigate = (path: '/' | '/app') => {
+    window.history.pushState({}, '', path)
+    setRoute(path === '/app' ? 'app' : 'landing')
+  }
+  if (route === 'landing') return <LandingPage openApp={() => navigate('/app')} />
   const [query, setQuery] = useState(''), [category, setCategory] = useState<'all' | Category>('all'), [status, setStatus] = useState<StatusFilter>('all'), [sort, setSort] = useState<Sort>('nearest'), [month, setMonth] = useState(() => new Date())
   const [permission, setPermission] = useState<NotificationPermission | 'unsupported'>(() => 'Notification' in window ? Notification.permission : 'unsupported')
   useEffect(() => saveData(dates), [dates]); useEffect(() => saveReminderPreferences(preferences), [preferences])
