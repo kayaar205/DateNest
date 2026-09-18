@@ -1,4 +1,4 @@
-# Life Date Planner — MVP
+# DateNest — MVP
 
 A local-first React + TypeScript MVP for tracking important dates.
 

@@ -301,6 +301,65 @@ textarea:focus {
     border-left: 3px solid #5a7fd0
 }
 
+/* Rich dashboard cards and urgency system */
+.date-card {
+    display: flex;
+    padding: 0;
+    overflow: hidden;
+    border-left-width: 4px
+}
+
+.date-card.completed { border-left-color: #5d9a70; background: #fbfdfb }
+.date-card.completed .date-main strong { color: #788276; text-decoration: line-through }
+
+.card-open {
+    border: 0;
+    background: transparent;
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 42px minmax(160px, 1fr) auto auto;
+    gap: 13px;
+    align-items: center;
+    padding: 13px 8px 13px 15px;
+    text-align: left;
+    color: inherit
+}
+
+.card-open:hover { background: #fafbfc }
+
+.urgency {
+    border-radius: 20px;
+    padding: 5px 8px;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+    color: #5572aa;
+    background: #eef3ff
+}
+.urgency.today { color: #9b6505; background: #fff4dc }
+.urgency.overdue { color: #ad3741; background: #fff0f1 }
+.urgency.completed { color: #467b55; background: #edf7ef }
+
+.card-actions {
+    display: flex;
+    align-items: center;
+    padding: 0 12px 0 4px;
+    gap: 4px
+}
+.card-actions button {
+    border: 0;
+    background: #f2f4f7;
+    color: #586477;
+    width: 29px;
+    height: 29px;
+    border-radius: 8px;
+    font-weight: 800;
+    line-height: 1
+}
+.card-actions button:hover { background: #e3e8ef; color: #172033 }
+.card-actions .delete-action:hover { background: #fff0f1; color: #bd3f49 }
+
 .date-icon {
     width: 42px;
     height: 42px;
@@ -587,6 +646,7 @@ textarea:focus {
 .big-count.today {
     color: #a26e0e
 }
+.big-count.completed { color: #4e8158 }
 
 .detail-grid {
     display: grid;
@@ -773,7 +833,39 @@ footer>div {
     color: #bb5961
 }
 
+/* Date assistant dashboard */
+.dashboard-greeting { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:26px }
+.dashboard-greeting h1 { margin:0; font-size:32px; letter-spacing:-1px }
+.dashboard-greeting p:not(.eyebrow) { margin:7px 0; color:#566276; font-size:16px }
+.dashboard-greeting time { color:#8a93a3; font-size:13px; font-weight:650 }
+.daily-status { margin:0 0 14px; color:#687486; font-size:13px }.daily-status.has-overdue { color:#9d4b52 }
+.dashboard-stats { grid-template-columns:repeat(4,1fr); margin-bottom:42px }
+.dashboard-stats .stat { min-height:96px; display:flex; flex-direction:column; justify-content:center }
+.compact-add { font-size:12px }
+.attention-list { display:grid; gap:10px }
+.attention-card { display:flex; align-items:stretch; background:#fff; border:1px solid #e5e8ed; border-left:4px solid #637fae; border-radius:13px; overflow:hidden; transition:border-color .16s,box-shadow .16s,transform .16s }
+.attention-card.overdue { border-left-color:#d5535c }.attention-card.today { border-left-color:#d6a13b }
+.attention-card:hover { border-color:#cbd2dd; box-shadow:0 5px 16px #1720330b; transform:translateY(-1px) }
+.attention-open { flex:1; min-width:0; display:grid; grid-template-columns:44px 1fr auto; gap:13px; align-items:center; text-align:left; padding:15px 8px 15px 16px; border:0; background:transparent; color:inherit }
+.attention-open:hover { background:#fafbfc }.attention-open .date-icon { width:44px;height:44px;font-size:20px;background:#f4f6fa }
+.attention-content strong,.attention-content time,.attention-content small,.attention-content em { display:block }.attention-content strong { font-size:14px; transition:color .16s }.attention-card:hover .attention-content strong { color:#3d5f99 }.attention-content small { color:#929baa;font-size:11px;margin-top:3px }.attention-content time { margin:9px 0 0;color:#566276;font-size:12px;font-weight:650 }.attention-content em { color:#8c96a5;font-size:10px;font-style:normal;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis }.relative-status { display:grid; gap:3px; text-align:right; color:#59677b; font-size:11px; white-space:nowrap }.relative-status strong { font-size:12px; color:#334259 }.relative-status small { color:#7c8899 }.relative-status i { display:inline-block; font-style:normal; transition:transform .16s }.attention-card:hover .relative-status i,.date-card:hover .relative-status i { transform:translateX(3px) }.attention-card.overdue .relative-status strong { color:#b74049 }.attention-card.today .relative-status strong { color:#9a690d }
+.view-all { display:block; margin:15px auto 0; border:0; background:transparent; color:#435f91; font-weight:700; font-size:12px }.view-all span { display:inline-block; transition:transform .16s }.view-all:hover span { transform:translateX(3px) }
+.week-section,.browse-section { margin-top:42px }.week-list { border:1px solid #e5e8ed; border-radius:13px; overflow:hidden; background:#fff }.week-item { width:100%; display:grid; grid-template-columns:92px 1fr 16px; gap:12px; align-items:center; text-align:left; border:0; border-bottom:1px solid #edf0f4; background:#fff; padding:12px 15px; color:#657086 }.week-item:last-child { border-bottom:0 }.week-item:hover { background:#fafbfc }.week-group { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.07em; color:#8a94a4 }.week-event { display:grid; grid-template-columns:25px 1fr; align-items:center }.week-event i { grid-row:span 2; font-style:normal }.week-event strong { color:#293448; font-size:13px }.week-event small { color:#8490a1; font-size:11px; margin-top:3px }.week-empty { background:#fff; border:1px dashed #d7dce5; border-radius:13px; padding:26px; text-align:center; color:#687486; font-size:13px }
+.week-list { position:relative }.week-list:before { content:""; position:absolute; left:27px; top:24px; bottom:24px; width:1px; background:#e1e5ec }.week-item { position:relative }.week-group:before { content:""; display:inline-block; width:7px; height:7px; border-radius:50%; background:#647da8; margin-right:8px; vertical-align:middle; position:relative; z-index:1; box-shadow:0 0 0 3px #fff }
+.date-card { transition:border-color .16s,box-shadow .16s,transform .16s }.date-card:hover { border-color:#cbd2dd; box-shadow:0 5px 16px #1720330b; transform:translateY(-1px) }.date-card:hover .date-main strong { color:#3d5f99 }.compact-status { min-width:76px }
+.browse-section { padding-top:6px }.field-help,.notification-note { color:#7d8798; font-size:11px; line-height:1.5; margin:9px 0 0 }.notification-note { background:#f0f3f7; border-radius:10px; padding:12px 14px; margin:12px 0 }.reminder-settings { align-items:flex-start }.reminder-settings .checks { justify-content:flex-end }
+
 @media(max-width:720px) {
+    .dashboard-greeting { align-items:flex-start; gap:16px; margin-bottom:20px }
+    .dashboard-greeting h1 { font-size:26px }.dashboard-greeting p:not(.eyebrow) { font-size:13px; line-height:1.45 }
+    .greeting-add { white-space:nowrap; padding:9px 10px; font-size:11px }
+    .dashboard-stats { grid-template-columns:repeat(2,1fr); margin-bottom:32px }.dashboard-stats .stat { min-height:80px }
+    .attention-open { grid-template-columns:40px minmax(0,1fr); padding:12px }.attention-open b { grid-column:2; margin-top:2px }.attention-open .date-icon { width:40px;height:40px;font-size:17px }
+    .relative-status { grid-column:2; text-align:left; margin-top:-2px }.attention-content em { white-space:normal }
+    .attention-card .card-actions { padding-top:0 }
+    .week-item { grid-template-columns:70px 1fr 12px; padding:11px }
+    .week-list:before { left:22px }.week-group:before { margin-right:6px }.compact-status { display:none }
+    .reminder-settings .checks { justify-content:flex-start }
     .topbar {
         height: auto;
         padding: 13px 16px;
@@ -856,10 +948,12 @@ footer>div {
         flex-direction: column
     }
 
-    .date-card {
-        grid-template-columns: 36px 1fr auto;
+    .date-card { display: block; position: relative }
+
+    .card-open {
+        grid-template-columns: 36px minmax(0, 1fr) auto;
         gap: 9px;
-        padding: 11px
+        padding: 11px 11px 8px
     }
 
     .date-icon {
@@ -869,6 +963,13 @@ footer>div {
 
     .countdown {
         font-size: 10px
+    }
+
+    .urgency { display: none }
+
+    .card-actions {
+        justify-content: flex-end;
+        padding: 0 10px 10px
     }
 
     .chevron {
